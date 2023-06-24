@@ -22,10 +22,11 @@ function ComicsList(){
 
   return (
     <>
-      <h1>MARVEL COMICS</h1>
-      <div className="list">
+      <h1 className="text-5xl font-extrabold text-center text-red-600 py-5 bg-zinc-900">MARVEL COMICS</h1>
+      <hr className="border-yellow-600"/>
+      <div className="grid grid-cols-4 gap-5 mr-8 ml-8 mt-12 mb-16 pb-16 pt-9 bg-zinc-900 shadow-2xl shadow-zinc-900">
         {comicsList.map((comic, index) => (
-        <li key={index}>{comic['title']}</li>
+        <div className="text-black font-medium bg-slate-100 my-2 mx-6 hover:bg-red-100 p-1.5 border-2 border-yellow-600 rounded-br-lg rounded-tl-lg cursor-pointer" key={index}>{comic['title']}</div>
         ))}
       </div>
     </>

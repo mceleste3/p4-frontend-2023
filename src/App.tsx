@@ -1,9 +1,14 @@
-import './App.css'
 import ComicsList from './components/ComicsList'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <ComicsList />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ComicsList/>} />
+      </Routes>
+    </BrowserRouter>
+    
   )
 }
 
