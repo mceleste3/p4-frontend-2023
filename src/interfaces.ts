@@ -1,5 +1,4 @@
 interface Comic {
-    dates: Array<Object>;
     description: string;
     id: number;
     isbn: string;
