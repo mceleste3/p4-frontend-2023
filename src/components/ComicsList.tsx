@@ -29,7 +29,7 @@ function ComicsList() {
       };
       comics.push(comic);
     });
-    console.log(comics);
+    //console.log(comics);
     setComicsList(comics);
   };
 
