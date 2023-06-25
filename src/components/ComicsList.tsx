@@ -1,19 +1,9 @@
 import { useEffect, useState } from "react";
-import Comic from "./Comic";
+import ComicPreview from "./ComicPreview";
+import Comic from "../interfaces";
 
 function ComicsList() {
   const [comicsList, setComicsList] = useState<Comic[]>([]);
-
-  interface Comic {
-    dates: Array<Object>;
-    description: string;
-    id: number;
-    isbn: string;
-    pageCount: number;
-    path: string;
-    extension: string;
-    title: string;
-  }
 
   const loadComics = async () => {
     const response = await fetch(
@@ -24,11 +14,11 @@ function ComicsList() {
     const result = await response.json();
     //console.log(result);
     const comicsResults: Array<any> = result.data.results;
-    //console.log(comicsResults.length);
+    //console.log(comicsResults);
     const comics: Array<Comic> = [];
     comicsResults.forEach(elem => {
       const comic: Comic = {
-        dates: elem.dates,
+        dates: [...elem.dates],
         description: elem.description,
         id: elem.id,
         isbn: elem.isbn,
@@ -36,22 +26,19 @@ function ComicsList() {
         path: elem.thumbnail.path,
         extension: elem.thumbnail.extension,
         title: elem.title,
+        creators: [...elem.creators.items],
       };
       comics.push(comic);
     }); 
     console.log(comics);
-    //console.log(Object.keys(comics[0]));
+    //console.log(Object.values(comics[0].creators[0]));
+    //console.log(comics[0].creators[0].name)
     setComicsList(comics);
   };
 
   useEffect(() => {
-    console.log("datos");
     loadComics();
   }, []);
-
-  if (comicsList.length === 1) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>
@@ -59,11 +46,12 @@ function ComicsList() {
         MARVEL COMICS
       </h1>
       <hr className="border-yellow-600" />
+      {comicsList.length === 0? <div className="text-xl font-bold text-center m-10 text-white">Loading...</div>:
       <div className="grid grid-cols-4 gap-5 mr-8 ml-8 mt-12 mb-16 pb-16 pt-9 bg-zinc-900 shadow-2xl shadow-zinc-900">
-        {comicsList.map((comic:Comic) => (
-          <Comic key={comic.id} title={comic.title} path={comic.path} extension={comic.extension} />
+        {comicsList.map((comic: Comic) => (
+          <ComicPreview key={comic.id} comic={comic} />
         ))}
-      </div>
+      </div>}
     </>
   );
 }
